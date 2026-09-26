@@ -1,5 +1,6 @@
-# pip3 install streamlit
-# python -m streamlit run app.py
+# To run a streamlit app
+# Navigate to the app directory and run
+# >> python -m streamlit run fileName.py
 
 import streamlit as st
 
@@ -13,8 +14,8 @@ st.header("This is a Header")   # section header
 st.write("---")
 
 # Plain Texts
-st.text("- **Some text**")     # to display plain text
-st.write("- **Some text**")    # more versatile than text, can handle (dataframes, markdowns, etc.)
+st.text("- **Some text**")     # displays plain text
+st.write("- **Some text**")    # can handle markdowns, dataframes etc.
 st.write("---")
 
 # Special Messages, Colorful texts
@@ -93,3 +94,24 @@ st.header("Video from URL")
 video_url = "https://youtu.be/dQw4w9WgXcQ?si=twGniNRaP866vwoA"
 st.video(video_url)
 st.write("---")
+
+# Session state variables
+
+temp_counter = 0                        # regular python variable 
+if "perm_counter" not in st.session_state:
+    st.session_state.perm_counter = 0   # streamlit session state variable
+
+def incr():
+    # this function increases both counters by 1
+    global temp_counter
+    temp_counter += 1
+    
+    st.session_state.perm_counter += 1
+
+
+# display both counter values
+st.write(f"TEMP = {temp_counter}")
+st.write(f"PERM = {st.session_state.perm_counter}")
+
+# this button calls the `incr` function
+st.button("Increment", on_click=incr)
